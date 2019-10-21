@@ -176,6 +176,17 @@ typedef struct {
   }
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+referenceSizeForHeaderInSection:(NSInteger)section {
+    id<IGListSupplementaryViewSource> source = [self sectionControllerForSection:section].supplementaryViewSource;
+    if (source) {
+        return [source sizeForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndex:section];
+    } else {
+        return CGSizeZero;
+    }
+}
+
 - (ASSizeRange)collectionNode:(ASCollectionNode *)collectionNode sizeRangeForFooterInSection:(NSInteger)section
 {
   id<ASIGSupplementaryNodeSource> src = [self supplementaryElementSourceForSection:section];
@@ -235,6 +246,16 @@ typedef struct {
   } else {
     return ASSizeRangeUnconstrained;
   }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ASIGSectionController *ctrl = [self sectionControllerForSection:indexPath.section];
+    if ([ASIGListAdapterBasedDataSource overridesForSectionControllerClass:ctrl.class].sizeRangeForItem) {
+        return [ctrl sizeForItemAtIndex:indexPath.item];
+    } else {
+        return CGSizeZero;
+    }
 }
 
 - (ASCellNodeBlock)collectionNode:(ASCollectionNode *)collectionNode nodeBlockForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
