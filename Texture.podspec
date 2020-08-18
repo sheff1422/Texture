@@ -40,7 +40,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'PINRemoteImage' do |pin|
     pin.dependency 'PINRemoteImage/iOS', '~> 3.0.0'
-    pin.dependency 'PINRemoteImage/PINCache'
+    pin.dependency 'PINRemoteImage/PINCache', :commit => '83ed1a0'
     pin.dependency 'Texture/Core'
   end
 
