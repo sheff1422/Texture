@@ -150,6 +150,13 @@ typedef struct {
   return result;
 }
 
+- (BOOL)collectionNode:(ASCollectionNode *)collectionNode shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([_collectionDelegate respondsToSelector:@selector(collectionNode:shouldSelectItemAtIndexPath:)]) {
+      return [_collectionDelegate collectionNode:collectionNode shouldSelectItemAtIndexPath:indexPath];
+    }
+    return YES;
+}
+
 - (void)collectionNode:(ASCollectionNode *)collectionNode willBeginBatchFetchWithContext:(ASBatchContext *)context
 {
   if ([_collectionDelegate respondsToSelector:@selector(collectionNode:willBeginBatchFetchWithContext:)]) {
